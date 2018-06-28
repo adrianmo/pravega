@@ -264,7 +264,7 @@ class SegmentInputStreamImpl implements SegmentInputStream {
     @Override
     @Synchronized
     public boolean canReadWithoutBlocking() {
-        boolean result = buffer.dataAvailable() > 0 || (outstandingRequest != null && Futures.isSuccessful(outstandingRequest)
+        boolean result = receivedEndOfSegment || buffer.dataAvailable() > 0 || (outstandingRequest != null && Futures.isSuccessful(outstandingRequest)
                 && outstandingRequest.join().getData().hasRemaining());
         log.warn("canReadWithoutBlocking {} on segment {} status is {}", result, getSegmentId(), this);
         return result;
