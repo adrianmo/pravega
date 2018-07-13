@@ -108,7 +108,7 @@ public class StreamMetadataResourceImpl implements ApiV1.ScopesApi {
         try {
             authenticate(createScopeRequest.getScopeName(), READ_UPDATE);
         } catch (AuthException e) {
-            log.warn("Create scope for {} failed due to authentication failure {}.", createScopeRequest.getScopeName(), e);
+            log.warn(String.format("Create scope for %s failed due to authentication failure.", createScopeRequest.getScopeName()), e);
             asyncResponse.resume(Response.status(Status.fromStatusCode(e.getResponseCode())).build());
             LoggerHelpers.traceLeave(log, "createScope", traceId);
             return;
@@ -127,7 +127,7 @@ public class StreamMetadataResourceImpl implements ApiV1.ScopesApi {
                 return Response.status(Status.INTERNAL_SERVER_ERROR).build();
             }
         }).exceptionally(exception -> {
-            log.warn("createScope for scope: {} failed, exception: {}", createScopeRequest.getScopeName(), exception);
+            log.warn(String.format("createScope for scope: %s failed", createScopeRequest.getScopeName()), exception);
             return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         }).thenApply(asyncResponse::resume)
         .thenAccept(x -> LoggerHelpers.traceLeave(log, "createScope", traceId));
@@ -249,7 +249,7 @@ public class StreamMetadataResourceImpl implements ApiV1.ScopesApi {
                 return Response.status(Status.INTERNAL_SERVER_ERROR).build();
             }
         }).exceptionally(exception -> {
-            log.warn("deleteScope for {} failed with exception: {}", scopeName, exception);
+            log.warn(String.format("deleteScope for %s failed", scopeName), exception);
             return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         }).thenApply(asyncResponse::resume)
         .thenAccept(x -> LoggerHelpers.traceLeave(log, "deleteScope", traceId));
@@ -292,7 +292,7 @@ public class StreamMetadataResourceImpl implements ApiV1.ScopesApi {
               return Response.status(Status.INTERNAL_SERVER_ERROR).build();
           }
         }).exceptionally(exception -> {
-           log.warn("deleteStream for {} failed with exception: {}", streamName, exception);
+           log.warn(String.format("deleteStream for %s failed", streamName), exception);
            return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         }).thenApply(asyncResponse::resume)
         .thenAccept(x -> LoggerHelpers.traceLeave(log, "deleteStream", traceId));
@@ -326,7 +326,7 @@ public class StreamMetadataResourceImpl implements ApiV1.ScopesApi {
                     new ArrayList<>(readerGroup.getStreamNames()));
             return Response.status(Status.OK).entity(readerGroupProperty).build();
         }, controllerService.getExecutor()).exceptionally(exception -> {
-            log.warn("getReaderGroup for {} failed with exception: ", readerGroupName, exception);
+            log.warn(String.format("getReaderGroup for %s failed", readerGroupName), exception);
             if (exception.getCause() instanceof InvalidStreamException) {
                 return Response.status(Status.NOT_FOUND).build();
             } else {
@@ -370,7 +370,7 @@ public class StreamMetadataResourceImpl implements ApiV1.ScopesApi {
                         log.warn("Scope: {} not found", scopeName);
                         return Response.status(Status.NOT_FOUND).build();
                     } else {
-                        log.warn("getScope for {} failed with exception: {}", scopeName, exception);
+                        log.warn(String.format("getScope for %s failed", scopeName), exception);
                         return Response.status(Status.INTERNAL_SERVER_ERROR).build();
                     }
                 }).thenApply(asyncResponse::resume)
@@ -409,7 +409,7 @@ public class StreamMetadataResourceImpl implements ApiV1.ScopesApi {
                         log.warn("Stream: {}/{} not found", scopeName, streamName);
                         return Response.status(Status.NOT_FOUND).build();
                     } else {
-                        log.warn("getStream for {}/{} failed with exception: {}", scopeName, streamName, exception);
+                        log.warn(String.format("getStream for %s/%s failed", scopeName, streamName), exception);
                         return Response.status(Status.INTERNAL_SERVER_ERROR).build();
                     }
                 }).thenApply(asyncResponse::resume)
@@ -450,7 +450,7 @@ public class StreamMetadataResourceImpl implements ApiV1.ScopesApi {
                         log.warn("Scope name: {} not found", scopeName);
                         return Response.status(Status.NOT_FOUND).build();
                     } else {
-                        log.warn("listReaderGroups for {} failed with exception: ", scopeName, exception);
+                        log.warn(String.format("listReaderGroups for %s failed", scopeName), exception);
                         return Response.status(Status.INTERNAL_SERVER_ERROR).build();
                     }
                 }).thenApply(asyncResponse::resume)
@@ -518,7 +518,7 @@ public class StreamMetadataResourceImpl implements ApiV1.ScopesApi {
                         log.warn("Scope name: {} not found", scopeName);
                         return Response.status(Status.NOT_FOUND).build();
                     } else {
-                        log.warn("listStreams for {} failed with exception: {}", scopeName, exception);
+                        log.warn(String.format("listStreams for %s failed", scopeName), exception);
                         return Response.status(Status.INTERNAL_SERVER_ERROR).build();
                     }
                 }).thenApply(asyncResponse::resume)
@@ -565,7 +565,7 @@ public class StreamMetadataResourceImpl implements ApiV1.ScopesApi {
                 return Response.status(Status.INTERNAL_SERVER_ERROR).build();
             }
         }).exceptionally(exception -> {
-            log.warn("updateStream for {}/{} failed with exception: {}", scopeName, streamName, exception);
+            log.warn(String.format("updateStream for %s/%s failed", scopeName, streamName), exception);
             return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         }).thenApply(asyncResponse::resume)
         .thenAccept(x -> LoggerHelpers.traceLeave(log, "updateStream", traceId));
@@ -615,7 +615,7 @@ public class StreamMetadataResourceImpl implements ApiV1.ScopesApi {
                 return Response.status(Status.INTERNAL_SERVER_ERROR).build();
             }
         }).exceptionally(exception -> {
-            log.warn("updateStreamState for {} failed with exception: {}", streamName, exception);
+            log.warn(String.format("updateStreamState for {} failed", streamName), exception);
             return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         }).thenApply(asyncResponse::resume)
         .thenAccept(x -> LoggerHelpers.traceLeave(log, "updateStreamState", traceId));

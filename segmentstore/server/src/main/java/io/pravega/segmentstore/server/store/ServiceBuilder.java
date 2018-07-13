@@ -320,7 +320,7 @@ public class ServiceBuilder implements AutoCloseable {
             try {
                 t.close();
             } catch (Exception ex) {
-                log.error("Error while closing ServiceBuilder: {}.", ex);
+                log.error("Error while closing ServiceBuilder", ex);
             }
 
             target.set(null);

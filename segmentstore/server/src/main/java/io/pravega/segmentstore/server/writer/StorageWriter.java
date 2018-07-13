@@ -452,16 +452,16 @@ class StorageWriter extends AbstractThreadPoolService implements Writer {
     private void logError(Throwable ex, boolean critical) {
         ex = Exceptions.unwrap(ex);
         if (critical) {
-            log.error("{}: Iteration[{}].CriticalError.", this.traceObjectId, this.state.getIterationId(), ex);
+            log.error(String.format("%s: Iteration[%s].CriticalError.", this.traceObjectId, this.state.getIterationId()), ex);
         } else {
-            log.error("{}: Iteration[{}].Error.", this.traceObjectId, this.state.getIterationId(), ex);
+            log.error(String.format("%s: Iteration[%s].Error.", this.traceObjectId, this.state.getIterationId()), ex);
         }
         //System.out.println(String.format("%s: Iteration[%s].Error. %s", this.traceObjectId, this.state.getIterationId(), ex));
     }
 
     private void logErrorHandled(Throwable ex) {
         ex = Exceptions.unwrap(ex);
-        log.warn("{}: Iteration[{}].HandledError {}", this.traceObjectId, this.state.getIterationId(), ex.toString());
+        log.warn(String.format("%s: Iteration[%s].HandledError.", this.traceObjectId, this.state.getIterationId()), ex);
         //        System.out.println(String.format("%s: Iteration[%s].Warn. %s", this.traceObjectId, this.state.getIterationId(), ex));
     }
 

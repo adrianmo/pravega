@@ -106,7 +106,7 @@ public class Pinger implements AutoCloseable {
                .whenComplete((v, ex) -> pingResult.entrySet().stream()
                                                   .filter(e -> !Futures.isSuccessful(e.getValue()))
                                                   .forEach(e -> {
-                                                      log.warn("Ping Transaction for txn ID:{} failed", e.getKey(),
+                                                      log.warn(String.format("Ping Transaction for txn ID:%s failed", e.getKey()),
                                                               getException(e.getValue()));
                                                   }));
         log.trace("Completed sending transaction pings.");

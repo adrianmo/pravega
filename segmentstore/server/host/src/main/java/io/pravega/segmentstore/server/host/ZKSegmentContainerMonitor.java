@@ -126,7 +126,7 @@ public class ZKSegmentContainerMonitor implements AutoCloseable {
             this.hostContainerMapNode.close();
         } catch (IOException e) {
             // Ignoring exception on shutdown.
-            log.warn("Failed to close hostContainerMapNode {}", e);
+            log.warn("Failed to close hostContainerMapNode", e);
         }
 
         val task = this.assigmentTask.getAndSet(null);
@@ -187,7 +187,7 @@ public class ZKSegmentContainerMonitor implements AutoCloseable {
             }
         } catch (Throwable e) {
             // Need to catch all exceptions here since throwing any exception here will halt this scheduled job.
-            log.warn("Failed to monitor the segmentcontainer assignment: ", e);
+            log.warn("Failed to monitor the segmentcontainer assignment", e);
         } finally {
             LoggerHelpers.traceLeave(log, "checkAssignment", traceId);
         }
@@ -207,7 +207,7 @@ public class ZKSegmentContainerMonitor implements AutoCloseable {
                         .stopContainer(handle, CLOSE_TIMEOUT_PER_CONTAINER)
                         .whenComplete((aVoid, throwable) -> {
                             if (throwable != null) {
-                                log.warn("Stopping container {} failed: {}", containerId, throwable);
+                                log.warn(String.format("Stopping container %s failed", containerId), throwable);
                             }
                             try {
                                 // We remove the handle and don't attempt retry on stop container failures.
@@ -245,7 +245,7 @@ public class ZKSegmentContainerMonitor implements AutoCloseable {
                                     log.info("Container {} has been registered.", handle.getContainerId());
                                 }
                             } else {
-                                log.warn("Starting container {} failed: {}", containerId, ex);
+                                log.warn(String.format("Starting container %s failed", containerId), ex);
                             }
                         } finally {
                             // The pending task has to be removed in the end to avoid inconsistencies since containerhandle

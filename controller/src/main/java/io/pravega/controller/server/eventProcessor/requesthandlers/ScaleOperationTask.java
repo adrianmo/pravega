@@ -63,8 +63,8 @@ public class ScaleOperationTask implements StreamTask<ScaleOpEvent> {
                         if (cause instanceof RetriesExhaustedException) {
                             cause = cause.getCause();
                         }
-                        log.warn("processing scale request for {}/{} segments {} failed {}", request.getScope(), request.getStream(),
-                                request.getSegmentsToSeal(), cause);
+                        log.warn(String.format("processing scale request for %s/%s segments %s failed", request.getScope(), request.getStream(),
+                                request.getSegmentsToSeal()), cause);
                         result.completeExceptionally(cause);
                     } else {
                         log.info("scale request for {}/{} segments {} to new ranges {} completed successfully.", request.getScope(), request.getStream(),

@@ -168,7 +168,7 @@ class StreamSegmentContainerRegistry implements SegmentContainerRegistry {
 
     private void handleContainerFailure(ContainerWithHandle containerWithHandle, Throwable exception) {
         unregisterContainer(containerWithHandle);
-        log.error("Critical failure for SegmentContainer {}. {}", containerWithHandle, exception);
+        log.error(String.format("Critical failure for SegmentContainer %s.", containerWithHandle), exception);
     }
 
     private void unregisterContainer(ContainerWithHandle containerWithHandle) {

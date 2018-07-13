@@ -163,7 +163,7 @@ public final class EventProcessorGroupImpl<T extends ControllerEvent> extends Ab
                     log.info("Attempting to seal the reader group entry from checkpoint store");
                     checkpointStore.sealReaderGroup(actorSystem.getProcess(), readerGroup.getGroupName());
                 } catch (CheckpointStoreException e) {
-                    log.warn("Error sealing reader group " + this.objectId, e);
+                    log.warn(String.format("Error sealing reader group %s", this.objectId), e);
                 }
 
                 // Initiate stop on all event processor cells and await their termination.
@@ -174,7 +174,7 @@ public final class EventProcessorGroupImpl<T extends ControllerEvent> extends Ab
                     try {
                         cell.awaitTerminated();
                     } catch (IllegalStateException e) {
-                        log.warn(String.format("Failed terminating %s", cell), e.getMessage());
+                        log.warn(String.format("Failed terminating %s", cell), e);
                     }
                 }
 
@@ -183,7 +183,7 @@ public final class EventProcessorGroupImpl<T extends ControllerEvent> extends Ab
                     log.info("Attempting to clean up reader group entry from checkpoint store");
                     checkpointStore.removeReaderGroup(actorSystem.getProcess(), readerGroup.getGroupName());
                 } catch (CheckpointStoreException e) {
-                    log.warn("Error removing reader group " + this.objectId, e);
+                    log.warn(String.format("Error removing reader group %s", this.objectId), e);
                 }
                 readerGroup.close();
                 log.info("Shutdown of {} complete", this.toString());

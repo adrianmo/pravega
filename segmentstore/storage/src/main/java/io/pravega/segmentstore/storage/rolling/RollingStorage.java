@@ -269,7 +269,7 @@ public class RollingStorage implements SyncStorage {
                 // If we encountered an error while writing the handle file, delete it before returning the exception,
                 // otherwise we'll leave behind an empty file.
                 try {
-                    log.warn("Could not create Header Segment for '{}', rolling back.", segmentName, ex);
+                    log.warn(String.format("Could not create Header Segment for '%s', rolling back.", segmentName), ex);
                     this.baseStorage.delete(headerHandle);
                 } catch (Exception ex2) {
                     ex.addSuppressed(ex2);
@@ -391,7 +391,7 @@ public class RollingStorage implements SyncStorage {
                     this.baseStorage.delete(source.getHeaderHandle());
                 } catch (StreamSegmentNotExistsException ex) {
                     // It's ok if it's not there anymore.
-                    log.warn("Attempted to delete concat source Header '{}' but it doesn't exist.", source.getHeaderHandle().getSegmentName(), ex);
+                    log.warn(String.format("Attempted to delete concat source Header '%s' but it doesn't exist.", source.getHeaderHandle().getSegmentName()), ex);
                 }
             }
         } else {

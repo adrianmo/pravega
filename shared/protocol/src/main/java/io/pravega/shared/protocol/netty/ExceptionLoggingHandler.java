@@ -36,7 +36,7 @@ public class ExceptionLoggingHandler extends ChannelDuplexHandler {
         try {
             super.channelRead(ctx, msg);
         } catch (Exception e) {
-            log.error("Uncaught exception on connection " + connectionName, e);
+            log.error(String.format("Uncaught exception on connection %s", connectionName), e);
             throw e;
         }
     }

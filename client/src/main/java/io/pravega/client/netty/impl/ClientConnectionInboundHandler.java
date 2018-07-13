@@ -191,7 +191,7 @@ public class ClientConnectionInboundHandler extends ChannelInboundHandlerAdapter
                     send(new WireCommands.KeepAlive());
                 }
             } catch (Exception e) {
-                log.warn("Keep alive failed, killing connection {} due to {} ", connectionName, e.getMessage());
+                log.warn(String.format("Keep alive failed, killing connection %s", connectionName), e);
                 close();
             }
         }

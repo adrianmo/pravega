@@ -189,7 +189,7 @@ public class ReaderCheckpointTest {
             assertTrue("Read for Checkpoint event", (event != null) && (event.isCheckpoint()));
             assertEquals("CheckPoint Name", checkPointName, event.getCheckpointName());
         } catch (ReinitializationRequiredException e) {
-            log.error("Exception while reading event using readerId: {}", readerId, e);
+            log.error(String.format("Exception while reading event using readerId: %s", readerId), e);
             fail("Reinitialization Exception is not expected");
         }
         return checkpoint.join();
@@ -215,7 +215,7 @@ public class ReaderCheckpointTest {
         CompletableFuture<List<EventRead<Integer>>> result = CompletableFuture.supplyAsync(
                 () -> readEvents(readerId), readerExecutor);
         Futures.exceptionListener(result,
-                t -> log.error("Error observed while reading events for reader id :{}", readerId, t));
+                t -> log.error(String.format("Error observed while reading events for reader id: %s", readerId), t));
         return result;
     }
 
@@ -256,7 +256,7 @@ public class ReaderCheckpointTest {
                         log.info("Read a check point event, checkpointName: {}", event.getCheckpointName());
                     }
                 } catch (ReinitializationRequiredException e) {
-                    log.error("Exception while reading event using readerId: {}", readerId, e);
+                    log.error(String.format("Exception while reading event using readerId: %s", readerId), e);
                     fail("Reinitialization Exception is not expected");
                 }
             } while (event.isCheckpoint() || event.getEvent() != null);

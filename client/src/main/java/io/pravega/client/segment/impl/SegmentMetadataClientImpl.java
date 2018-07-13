@@ -65,7 +65,7 @@ class SegmentMetadataClientImpl implements SegmentMetadataClient {
             try {
                 c.close();
             } catch (Exception e) {
-                log.warn("Exception tearing down connection: ", e);
+                log.warn("Exception tearing down connection", e);
             }
         }
     }
@@ -81,7 +81,7 @@ class SegmentMetadataClientImpl implements SegmentMetadataClient {
             try {
                 c.close();
             } catch (Exception e) {
-                log.warn("Exception tearing down connection: ", e);
+                log.warn("Exception tearing down connection", e);
             }
         }
     }

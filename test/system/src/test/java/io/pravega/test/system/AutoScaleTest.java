@@ -281,7 +281,7 @@ public class AutoScaleTest extends AbstractScaleTests {
                 try {
                     writer.writeEvent("0", "test").get();
                 } catch (Throwable e) {
-                    log.warn("test exception writing events: {}", e);
+                    log.warn("test exception writing events", e);
                     break;
                 }
             }
@@ -310,7 +310,7 @@ public class AutoScaleTest extends AbstractScaleTests {
                             ((io.grpc.StatusRuntimeException) e.getCause()).getStatus().getCode().equals(Status.Code.INTERNAL) &&
                             Objects.equals(((StatusRuntimeException) e.getCause()).getStatus().getDescription(),
                                     "io.pravega.controller.task.Stream.StreamTransactionMetadataTasks not yet ready"))) {
-                        log.warn("test exception writing events in a transaction : {}", e);
+                        log.warn("test exception writing events in a transaction", e);
                         break;
                     }
                 }

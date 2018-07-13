@@ -107,7 +107,7 @@ public class PravegaAuthManager {
                         }
                         builder.intercept(new PravegaInterceptor(handler));
                     } catch (Exception e) {
-                        log.warn("Exception while initializing auth handler {}", handler, e);
+                        log.warn(String.format("Exception while initializing auth handler %s", handler), e);
                     }
 
                 }

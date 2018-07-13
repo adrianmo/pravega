@@ -47,7 +47,7 @@ public class TokenVerifierImpl implements DelegationTokenVerifier {
                     return false;
                 }
             } catch (JwtException e) {
-                log.warn("Claim verification failed for resource {} because {}", resource, e);
+                log.warn(String.format("Claim verification failed for resource %s", resource), e);
                 return false;
             }
         } else {

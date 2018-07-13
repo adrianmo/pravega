@@ -116,7 +116,7 @@ class HDFSStorage implements SyncStorage {
                     this.fileSystem.close();
                     this.fileSystem = null;
                 } catch (IOException e) {
-                    log.warn("Could not close the HDFS filesystem: {}.", e);
+                    log.warn("Could not close the HDFS filesystem", e);
                 }
             }
         }

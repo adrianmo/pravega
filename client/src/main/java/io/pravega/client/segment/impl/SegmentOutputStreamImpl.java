@@ -431,7 +431,7 @@ class SegmentOutputStreamImpl implements SegmentOutputStream {
                 log.trace("Sending append request: {}", append);
                 connection.send(append);
             } catch (ConnectionFailedException e) {
-                log.warn("Connection " + writerId + " failed due to: ", e);
+                log.warn(String.format("Connection %s failed", writerId), e);
                 reconnect(); // As the message is inflight, this will perform the retransmission.
             }
         }

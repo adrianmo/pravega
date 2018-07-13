@@ -36,7 +36,7 @@ public class StatsLoggerImpl implements StatsLogger {
         try {
             return new OpStatsLoggerImpl(metrics, basename, statName);
         } catch (Exception e) {
-            log.warn("createStats failure: {}", statName, e);
+            log.warn(String.format("createStats failure: %s", statName), e);
             return NULLOPSTATSLOGGER;
         }
     }
@@ -46,7 +46,7 @@ public class StatsLoggerImpl implements StatsLogger {
         try {
             return new CounterImpl(statName);
         } catch (Exception e) {
-            log.warn("createCounter failure: {}", statName, e);
+            log.warn(String.format("createCounter failure: %s", statName), e);
             return NULLCOUNTER;
         }
     }
@@ -56,7 +56,7 @@ public class StatsLoggerImpl implements StatsLogger {
         try {
             return new GaugeImpl<>(statName, valueSupplier);
         } catch (Exception e) {
-            log.warn("registerGauge failure: {}", statName, e);
+            log.warn(String.format("registerGauge failure: %s", statName), e);
             return NULLGAUGE;
         }
     }
@@ -66,7 +66,7 @@ public class StatsLoggerImpl implements StatsLogger {
         try {
             return new MeterImpl(statName);
         } catch (Exception e) {
-            log.warn("createMeter failure: {}", statName, e);
+            log.warn(String.format("createMeter failure: %s", statName), e);
             return NULLMETER;
         }
     }

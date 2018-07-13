@@ -221,7 +221,7 @@ public class DurableLog extends AbstractService implements OperationLog {
             Preconditions.checkState(!this.metadata.isRecoveryMode(), "Recovery completed but Metadata is still in Recovery Mode.");
             return recoveredItemCount > 0;
         } catch (Exception ex) {
-            log.error("{} Recovery FAILED.", this.traceObjectId, ex);
+            log.error(String.format("%s: Recovery FAILED.", this.traceObjectId), ex);
             if (Exceptions.unwrap(ex) instanceof DataCorruptionException) {
                 // DataCorruptionException during recovery means we will be unable to execute the recovery successfully
                 // regardless how many times we try. We need to disable the log so that future instances of this class
@@ -229,9 +229,9 @@ public class DurableLog extends AbstractService implements OperationLog {
                 // someone can manually fix the problem).
                 try {
                     this.durableDataLog.disable();
-                    log.info("{} Log disabled due to DataCorruptionException during recovery.", this.traceObjectId);
+                    log.info("{}: Log disabled due to DataCorruptionException during recovery.", this.traceObjectId);
                 } catch (Exception disableEx) {
-                    log.warn("{}: Unable to disable log after DataCorruptionException during recovery.", this.traceObjectId, disableEx);
+                    log.warn(String.format("%s: Unable to disable log after DataCorruptionException during recovery.", this.traceObjectId), disableEx);
                     ex.addSuppressed(disableEx);
                 }
             }
@@ -377,7 +377,7 @@ public class DurableLog extends AbstractService implements OperationLog {
                     // We don't care if this operation completed successfully or not. The Operation Barrier needs to complete
                     // when all operations prior to it completed, regardless of outcome.
                     if (ex != null) {
-                        log.warn("{}: Error caught while waiting for {}: {}.", this.traceObjectId, ProbeOperation.class.getSimpleName(), ex);
+                        log.warn(String.format("%s: Error caught while waiting for %s.", this.traceObjectId, ProbeOperation.class.getSimpleName()), ex);
                     }
                 });
     }
@@ -407,7 +407,7 @@ public class DurableLog extends AbstractService implements OperationLog {
 
     private void queueFailedHandler(Throwable cause) {
         // The Queue Processor failed. We need to shut down right away.
-        log.warn("{}: QueueProcessor failed with exception {}", this.traceObjectId, cause);
+        log.warn(String.format("%s: QueueProcessor failed with exception", this.traceObjectId), cause);
         this.stopException.set(cause);
         stopAsync();
     }

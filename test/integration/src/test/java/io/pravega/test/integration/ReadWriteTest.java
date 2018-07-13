@@ -215,7 +215,7 @@ public class ReadWriteTest {
                     writer.writeEvent(String.valueOf(value), value);
                     writer.flush();
                 } catch (Throwable e) {
-                    log.warn("Test exception writing events: {}", e);
+                    log.warn("Test exception writing events", e);
                     break;
                 }
             }

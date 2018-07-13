@@ -329,38 +329,38 @@ public class AppendProcessor extends DelegatingRequestProcessor {
     private void handleException(UUID writerId, long requestId, String segment, String doingWhat, Throwable u) {
         if (u == null) {
             IllegalStateException exception = new IllegalStateException("No exception to handle.");
-            log.error("Append processor: Error {} on segment = '{}'", doingWhat, segment, exception);
+            log.error(String.format("Append processor: Error %s on segment = '%s'", doingWhat, segment), exception);
             throw exception;
         }
 
         u = Exceptions.unwrap(u);
         if (u instanceof StreamSegmentExistsException) {
-            log.warn("Segment '{}' already exists and {} cannot perform operation '{}'.", segment, writerId, doingWhat);
+            log.warn(String.format("Segment '%s' already exists and %s cannot perform operation '%s'.", segment, writerId, doingWhat), u);
             connection.send(new SegmentAlreadyExists(requestId, segment));
         } else if (u instanceof StreamSegmentNotExistsException) {
-            log.warn("Segment '{}' does not exist and {} cannot perform operation '{}'.", segment, writerId, doingWhat);
+            log.warn(String.format("Segment '%s' does not exist and %s cannot perform operation '%s'.", segment, writerId, doingWhat), u);
             connection.send(new NoSuchSegment(requestId, segment));
         } else if (u instanceof StreamSegmentSealedException) {
-            log.info("Segment '{}' is sealed and {} cannot perform operation '{}'.", segment, writerId, doingWhat);
+            log.info(String.format("Segment '%s' is sealed and %s cannot perform operation '%s'.", segment, writerId, doingWhat), u);
             connection.send(new SegmentIsSealed(requestId, segment));
         } else if (u instanceof ContainerNotFoundException) {
             int containerId = ((ContainerNotFoundException) u).getContainerId();
-            log.warn("Wrong host. Segment '{}' (Container {}) is not owned and {} cannot perform operation '{}'.",
-                    segment, containerId, writerId, doingWhat);
+            log.warn(String.format("Wrong host. Segment '%s' (Container %s) is not owned and %s cannot perform operation '%s'.",
+                    segment, containerId, writerId, doingWhat), u);
             connection.send(new WrongHost(requestId, segment, ""));
         } else if (u instanceof BadAttributeUpdateException) {
-            log.warn("Bad attribute update by {} on segment {}.", writerId, segment, u);
+            log.warn(String.format("Bad attribute update by %s on segment %s.", writerId, segment), u);
             connection.send(new InvalidEventNumber(writerId, requestId));
             connection.close();
         } else if (u instanceof AuthenticationException) {
-            log.warn("Token check failed while being written by {} on segment {}.", writerId, segment, u);
+            log.warn(String.format("Token check failed while being written by %s on segment %s.", writerId, segment), u);
             connection.send(new WireCommands.AuthTokenCheckFailed(requestId));
             connection.close();
         } else if (u instanceof UnsupportedOperationException) {
-            log.warn("Unsupported Operation '{}'.", doingWhat, u);
+            log.warn(String.format("Unsupported Operation '%s'.", doingWhat), u);
             connection.send(new OperationUnsupported(requestId, doingWhat));
         } else {
-            log.error("Error (Segment = '{}', Operation = 'append')", segment, u);
+            log.error(String.format("Error (Segment = '%s', Operation = 'append')", segment), u);
             connection.close(); // Closing connection should reinitialize things, and hopefully fix the problem
         }
     }

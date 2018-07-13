@@ -84,7 +84,7 @@ public class SegmentSelector {
             segmentSealedCallback) {
         StreamSegmentsWithPredecessors successors = Futures.getAndHandleExceptions(
                 controller.getSuccessors(sealedSegment), t -> {
-                    log.error("Error while fetching successors for segment: {}", sealedSegment, t);
+                    log.error(String.format("Error while fetching successors for segment: %s", sealedSegment), t);
                     return null;
                 });
 

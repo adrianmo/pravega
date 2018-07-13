@@ -98,7 +98,7 @@ public class RawClient implements AutoCloseable {
                 try {
                     c.close();
                 } catch (Exception e) {
-                    log.warn("Exception tearing down connection: ", e);
+                    log.warn("Exception tearing down connection", e);
                 }
             });
         }

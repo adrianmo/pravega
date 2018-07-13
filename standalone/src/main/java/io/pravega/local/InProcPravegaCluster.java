@@ -213,7 +213,7 @@ public class InProcPravegaCluster implements AutoCloseable {
                 zclient.delete().guaranteed().deletingChildrenIfNeeded()
                         .forPath(path);
             } catch (Exception e) {
-                log.warn("Not able to delete path {} . Exception {}", path, e.getMessage());
+                log.warn(String.format("Not able to delete path %s", path), e);
             }
         }
         zclient.close();

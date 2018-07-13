@@ -360,7 +360,7 @@ abstract class AbstractFailoverTests {
                     // segment store, we should fail the test case in the presence of any exception
                     // caught here.
                     txnIsDone.set(true);
-                    log.warn("Exception while writing events in the transaction: ", e);
+                    log.warn("Exception while writing events in the transaction", e);
                     if (transaction != null) {
                         log.debug("Transaction with id: {}  failed", transaction.getTxnId());
                     }
@@ -421,7 +421,7 @@ abstract class AbstractFailoverTests {
                         log.debug("Read timeout");
                     }
                 } catch (Throwable e) {
-                    log.error("Test exception in reading events: ", e);
+                    log.error("Test exception in reading events", e);
                     testState.getReadException.set(e);
                 }
             }

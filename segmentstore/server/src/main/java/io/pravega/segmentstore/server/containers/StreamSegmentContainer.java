@@ -691,7 +691,7 @@ class StreamSegmentContainer extends AbstractService implements SegmentContainer
 
     private void shutdownWhenStopped(Service component, String componentName) {
         Consumer<Throwable> failedHandler = cause -> {
-            log.warn("{}: {} failed. Shutting down StreamSegmentContainer.", this.traceObjectId, componentName, cause);
+            log.warn(String.format("%s: %s failed. Shutting down StreamSegmentContainer.", this.traceObjectId, componentName), cause);
             if (state() == State.RUNNING) {
                 // We can only stop the service if it's already running. During the stop it will pick up the failure cause
                 // and terminate in failure.

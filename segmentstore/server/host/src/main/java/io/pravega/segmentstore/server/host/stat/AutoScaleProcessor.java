@@ -108,7 +108,7 @@ public class AutoScaleProcessor {
         maintenanceExecutor.schedule(() -> Retry.indefinitelyWithExpBackoff(100, 10, 10000,
                 e -> {
                     log.warn("error while creating writer for requeststream");
-                    log.debug("error while creating writer for requeststream {}", e);
+                    log.debug("error while creating writer for requeststream", e);
                 })
                 .runAsync(() -> {
                     if (clientFactory.get() == null) {
@@ -190,7 +190,7 @@ public class AutoScaleProcessor {
     private CompletableFuture<Void> writeRequest(AutoScaleEvent event) {
         return writer.get().writeEvent(event.getKey(), event).whenComplete((r, e) -> {
             if (e != null) {
-                log.error("error sending request to requeststream {}", e);
+                log.error("error sending request to requeststream", e);
             } else {
                 log.debug("scale event posted successfully");
             }

@@ -272,7 +272,7 @@ public class ControllerResolverFactory extends NameResolver.Factory {
                 } else {
                     this.resolverUpdater.onError(Status.UNKNOWN);
                 }
-                log.warn("Failed to construct controller endpoint list: ", e);
+                log.warn("Failed to construct controller endpoint list", e);
 
                 // Attempt retry with a lower timeout on failures to improve re-connectivity time.
                 nextScheduleTimeMS = FAILURE_RETRY_TIMEOUT_MS;

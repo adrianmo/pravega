@@ -385,7 +385,7 @@ public class ControllerServiceStarter extends AbstractIdleService {
             try {
                 hostName = InetAddress.getLocalHost().getHostAddress();
             } catch (UnknownHostException e) {
-                log.warn("Failed to get host address, defaulting to localhost: {}", e);
+                log.warn("Failed to get host address, defaulting to localhost", e);
                 hostName = "localhost";
             }
         }

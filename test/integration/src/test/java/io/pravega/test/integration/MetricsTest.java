@@ -164,7 +164,7 @@ public class MetricsTest {
                     writer1.writeEvent("", event);
                     writer1.flush();
                 } catch (Throwable e) {
-                    log.warn("Test exception writing events: {}", e);
+                    log.warn("Test exception writing events", e);
                     break;
                 }
             }
@@ -238,7 +238,7 @@ public class MetricsTest {
                     writer2.writeEvent("", event);
                     writer2.flush();
                 } catch (Throwable e) {
-                    log.warn("Test exception writing events: {}", e);
+                    log.warn("Test exception writing events", e);
                     break;
                 }
             }

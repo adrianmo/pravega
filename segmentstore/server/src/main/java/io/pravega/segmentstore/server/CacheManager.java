@@ -125,7 +125,7 @@ public class CacheManager extends AbstractScheduledService implements AutoClosea
 
             // Log the error and move on. If we don't catch the exception here, the AbstractScheduledService will
             // auto-shutdown.
-            log.error("{}: Error.", TRACE_OBJECT_ID, ex);
+            log.error(String.format("%s: Error.", TRACE_OBJECT_ID), ex);
         }
     }
 
@@ -280,7 +280,7 @@ public class CacheManager extends AbstractScheduledService implements AutoClosea
                     throw ex;
                 }
 
-                log.warn("{} Unable to update client {}. {}", TRACE_OBJECT_ID, c, ex);
+                log.warn(String.format("%s Unable to update client %s.", TRACE_OBJECT_ID, c), ex);
             }
         }
 

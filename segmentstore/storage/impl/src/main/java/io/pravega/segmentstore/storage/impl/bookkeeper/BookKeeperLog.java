@@ -138,12 +138,12 @@ class BookKeeperLog implements DurableDataLog {
     }
 
     private void handleWriteProcessorFailures(Throwable exception) {
-        log.warn("{}: Too many write processor failures; closing.", this.traceObjectId, exception);
+        log.warn(String.format("%s: Too many write processor failures; closing.", this.traceObjectId), exception);
         close();
     }
 
     private void handleRolloverFailure(Throwable exception) {
-        log.warn("{}: Too many rollover failures; closing.", this.traceObjectId, exception);
+        log.warn(String.format("%s: Too many rollover failures; closing.", this.traceObjectId), exception);
         close();
     }
 
@@ -174,7 +174,7 @@ class BookKeeperLog implements DurableDataLog {
                 try {
                     Ledgers.close(writeLedger.ledger);
                 } catch (DurableDataLogException bkEx) {
-                    log.error("{}: Unable to close LedgerHandle for Ledger {}.", this.traceObjectId, writeLedger.ledger.getId(), bkEx);
+                    log.error(String.format("%s: Unable to close LedgerHandle for Ledger %s.", this.traceObjectId, writeLedger.ledger.getId()), bkEx);
                 }
             }
 
@@ -247,7 +247,7 @@ class BookKeeperLog implements DurableDataLog {
             } catch (DurableDataLogException ex) {
                 // A failure here has no effect on the initialization of BookKeeperLog. In this case, the (empty) Ledger
                 // will remain in BookKeeper until manually deleted by a cleanup tool.
-                log.warn("{}: Unable to delete orphan empty ledger {}.", this.traceObjectId, id, ex);
+                log.warn(String.format("%s: Unable to delete orphan empty ledger %s.", this.traceObjectId, id), ex);
             }
         });
         log.info("{}: Initialized (Epoch = {}, UpdateVersion = {}).", this.traceObjectId, newMetadata.getEpoch(), newMetadata.getUpdateVersion());
@@ -580,7 +580,7 @@ class BookKeeperLog implements DurableDataLog {
             } catch (ObjectClosedException ex) {
                 // In case of failures, the WriteProcessor may already be closed. We don't want the exception to propagate
                 // to BookKeeper.
-                log.warn("{}: Not running WriteProcessor as part of callback due to BookKeeperLog being closed.", this.traceObjectId, ex);
+                log.warn(String.format("%s: Not running WriteProcessor as part of callback due to BookKeeperLog being closed.", this.traceObjectId), ex);
             }
         }
     }
@@ -602,7 +602,7 @@ class BookKeeperLog implements DurableDataLog {
      */
     private void handleWriteException(Throwable ex) {
         if (ex instanceof ObjectClosedException && !this.closed.get()) {
-            log.warn("{}: Caught ObjectClosedException but not closed; closing now.", this.traceObjectId, ex);
+            log.warn(String.format("%s: Caught ObjectClosedException but not closed; closing now.", this.traceObjectId), ex);
             close();
         }
     }
@@ -690,7 +690,7 @@ class BookKeeperLog implements DurableDataLog {
             } catch (DurableDataLogException ex) {
                 // Nothing we can do if we can't delete a ledger; we've already updated the metadata. Log the error and
                 // move on.
-                log.error("{}: Unable to delete truncated ledger {}.", this.traceObjectId, lm.getLedgerId(), ex);
+                log.error(String.format("%s: Unable to delete truncated ledger %s.", this.traceObjectId, lm.getLedgerId()), ex);
             }
         }
 
@@ -759,7 +759,7 @@ class BookKeeperLog implements DurableDataLog {
             try {
                 Ledgers.delete(newLedger.getId(), this.bookKeeper);
             } catch (Exception deleteEx) {
-                log.warn("{}: Unable to delete newly created ledger {}.", this.traceObjectId, newLedger.getId(), deleteEx);
+                log.warn(String.format("%s: Unable to delete newly created ledger %s.", this.traceObjectId, newLedger.getId()), deleteEx);
                 ex.addSuppressed(deleteEx);
             }
 

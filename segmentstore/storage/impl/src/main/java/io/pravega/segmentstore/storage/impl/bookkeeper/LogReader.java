@@ -71,7 +71,7 @@ class LogReader implements CloseableIterator<DurableDataLog.ReadItem, DurableDat
                 try {
                     Ledgers.close(this.currentLedger.handle);
                 } catch (DurableDataLogException bkEx) {
-                    log.error("Unable to close LedgerHandle for Ledger {}.", this.currentLedger.handle.getId(), bkEx);
+                    log.error(String.format("Unable to close LedgerHandle for Ledger %s.", this.currentLedger.handle.getId()), bkEx);
                 }
 
                 this.currentLedger = null;

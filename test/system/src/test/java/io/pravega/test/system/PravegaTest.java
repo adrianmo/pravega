@@ -185,7 +185,7 @@ public class PravegaTest {
                     log.debug("Read event: {} ", event);
                 }
             } catch (ReinitializationRequiredException e) {
-                log.error("Unexpected request to reinitialize {}", e);
+                log.error("Unexpected request to reinitialize", e);
                 System.exit(0);
             }
         }

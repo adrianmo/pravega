@@ -93,7 +93,7 @@ public class SegmentHelper {
 
             @Override
             public void processingFailure(Exception error) {
-                log.error("CreateSegment {} threw exception", qualifiedStreamSegmentName, error);
+                log.error(String.format("CreateSegment %s threw exception", qualifiedStreamSegmentName), error);
                 result.completeExceptionally(error);
             }
 
@@ -153,7 +153,7 @@ public class SegmentHelper {
 
             @Override
             public void processingFailure(Exception error) {
-                log.error("truncateSegment {} error", qualifiedName, error);
+                log.error(String.format("truncateSegment %s error", qualifiedName), error);
                 result.completeExceptionally(error);
             }
 
@@ -210,7 +210,7 @@ public class SegmentHelper {
 
             @Override
             public void processingFailure(Exception error) {
-                log.error("deleteSegment {} failed", qualifiedName, error);
+                log.error(String.format("deleteSegment %s failed", qualifiedName), error);
                 result.completeExceptionally(error);
             }
 
@@ -284,7 +284,7 @@ public class SegmentHelper {
 
             @Override
             public void processingFailure(Exception error) {
-                log.error("sealSegment {} failed", qualifiedName, error);
+                log.error(String.format("sealSegment %s failed", qualifiedName), error);
                 result.completeExceptionally(error);
             }
 
@@ -342,7 +342,7 @@ public class SegmentHelper {
 
             @Override
             public void processingFailure(Exception error) {
-                log.error("createTransaction {} failed", transactionName, error);
+                log.error(String.format("createTransaction %s failed", transactionName), error);
                 result.completeExceptionally(error);
             }
 
@@ -417,7 +417,7 @@ public class SegmentHelper {
 
             @Override
             public void processingFailure(Exception error) {
-                log.error("commitTransaction {} failed", transactionName, error);
+                log.error(String.format("commitTransaction %s failed", transactionName), error);
                 result.completeExceptionally(error);
             }
 
@@ -570,7 +570,7 @@ public class SegmentHelper {
 
             @Override
             public void processingFailure(Exception error) {
-                log.error("getSegmentInfo {} failed", qualifiedName, error);
+                log.error(String.format("getSegmentInfo %s failed", qualifiedName), error);
                 result.completeExceptionally(error);
             }
 

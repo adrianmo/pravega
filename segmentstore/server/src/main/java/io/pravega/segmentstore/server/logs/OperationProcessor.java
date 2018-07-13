@@ -405,7 +405,7 @@ class OperationProcessor extends AbstractThreadPoolService implements AutoClosea
             }
         }
 
-        log.warn("{}: Cancelling {} operations with exception: {}.", this.traceObjectId, cancelCount, failException.toString());
+        log.warn(String.format("%s: Cancelling %d operations with exception", this.traceObjectId, cancelCount), failException);
     }
 
     /**
@@ -426,7 +426,7 @@ class OperationProcessor extends AbstractThreadPoolService implements AutoClosea
         } catch (Throwable ex) {
             // MemoryStateUpdater.process() should only throw DataCorruptionExceptions, but just in case it
             // throws something else (i.e. NullPtr), we still need to handle it.
-            log.error("{}: MemoryStateUpdater.process failure.", traceObjectId, ex);
+            log.error(String.format("%s: MemoryStateUpdater.process failure.", traceObjectId), ex);
 
             // Then fail the remaining operations (which also handles fatal errors) and bail out.
             if (isFatalException(ex)) {

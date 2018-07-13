@@ -105,7 +105,7 @@ public class TxnSweeper implements FailoverSweeper {
                 x -> x != null, executor);
         return failOverTxns.whenCompleteAsync((v, e) -> {
             if (e != null) {
-                log.warn("Host={}, Caught exception sweeping orphaned transactions", failedHost, e);
+                log.warn(String.format("Host=%s, Caught exception sweeping orphaned transactions", failedHost), e);
             } else {
                 log.debug("Host={}, sweeping orphaned transactions complete", failedHost);
             }

@@ -349,7 +349,7 @@ public class StreamCutsTest extends AbstractReadWriteTest {
                             log.warn("Read unexpected null event at {}.", validEvents);
                         }
                     } catch (ReinitializationRequiredException e) {
-                        log.warn("Reinitialization of readers required: {}.", e);
+                        log.warn("Reinitialization of readers required", e);
                     }
                 }, executor),
                 executor).join();

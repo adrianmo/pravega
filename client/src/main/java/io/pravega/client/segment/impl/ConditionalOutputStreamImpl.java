@@ -137,7 +137,7 @@ class ConditionalOutputStreamImpl implements ConditionalOutputStream {
             try {
                 c.close();
             } catch (Exception e) {
-                log.warn("Exception tearing down connection: ", e);
+                log.warn("Exception tearing down connection", e);
             }
         }
     }

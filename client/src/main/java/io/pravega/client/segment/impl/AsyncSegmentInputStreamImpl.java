@@ -162,7 +162,7 @@ class AsyncSegmentInputStreamImpl extends AsyncSegmentInputStream {
 
         return backoffSchedule.retryWhen(t -> {
             Throwable ex = Exceptions.unwrap(t);
-            log.warn("Exception while reading from Segment : {}", segmentId, ex);
+            log.warn(String.format("Exception while reading from Segment : %s", segmentId), ex);
             return ex instanceof Exception && !(ex instanceof ConnectionClosedException) && !(ex instanceof SegmentTruncatedException);
         }).runAsync(() -> {
             return getConnection()
@@ -205,7 +205,7 @@ class AsyncSegmentInputStreamImpl extends AsyncSegmentInputStream {
             try {
                 c.getNow(null).close();
             } catch (Exception e) {
-                log.warn("Exception tearing down connection: ", e);
+                log.warn("Exception tearing down connection", e);
             }
         }
         failAllInflight(exceptionToInflightRequests);

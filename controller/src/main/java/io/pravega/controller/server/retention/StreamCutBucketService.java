@@ -69,7 +69,7 @@ public class StreamCutBucketService extends AbstractService implements BucketCha
                         })
                         .collect(Collectors.toMap(s -> s, this::getStreamRetentionFuture))
                 )),
-                e -> log.warn("exception thrown getting streams for bucket {}, e = {}", bucketId, e), executor)
+                e -> log.warn(String.format("exception thrown getting streams for bucket %s", bucketId), e), executor)
                 .thenAccept(x -> {
                     log.info("streams collected for the bucket {}, registering for change notification and starting loop for processing notifications", bucketId);
                     streamMetadataStore.registerBucketChangeListener(bucketId, this);
@@ -132,11 +132,11 @@ public class StreamCutBucketService extends AbstractService implements BucketCha
                         config.getRetentionPolicy(), System.currentTimeMillis(), context,
                         this.streamMetadataTasks.retrieveDelegationToken()))
                 .exceptionally(e -> {
-                    log.warn("Exception thrown while performing auto retention for stream {} ", stream, e);
+                    log.warn(String.format("Exception thrown while performing auto retention for stream %s", stream), e);
                     throw new CompletionException(e);
                 }), RetryHelper.UNCONDITIONAL_PREDICATE, 5, executor)
                 .exceptionally(e -> {
-                    log.warn("Unable to perform retention for stream {}. Ignoring, retention will be attempted in next cycle.", stream, e);
+                    log.warn(String.format("Unable to perform retention for stream %s. Ignoring, retention will be attempted in next cycle.", stream), e);
                     return null;
                 });
     }

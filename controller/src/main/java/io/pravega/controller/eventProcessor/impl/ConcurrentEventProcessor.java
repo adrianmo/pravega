@@ -147,7 +147,7 @@ public class ConcurrentEventProcessor<R extends ControllerEvent, H extends Reque
 
             future = indefiniteRetries(() -> writeBack(request, writer), executor);
         } else {
-            log.error("ConcurrentEventProcessor Processing failed, exiting {}", e);
+            log.error("ConcurrentEventProcessor Processing failed, exiting", e);
             future = CompletableFuture.completedFuture(null);
         }
 
@@ -197,7 +197,7 @@ public class ConcurrentEventProcessor<R extends ControllerEvent, H extends Reque
                 }
             }
         } catch (Exception e) {
-            log.warn("error while trying to store checkpoint in the store {}", e);
+            log.warn("error while trying to store checkpoint in the store", e);
         }
     }
 

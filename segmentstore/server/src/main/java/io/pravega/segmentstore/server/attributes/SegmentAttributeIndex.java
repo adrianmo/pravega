@@ -493,8 +493,8 @@ class SegmentAttributeIndex implements AttributeIndex, CacheManager.Client, Auto
                         if (ex instanceof StreamSegmentMergedException
                                 || ex instanceof StreamSegmentSealedException
                                 || ex instanceof StreamSegmentNotExistsException) {
-                            log.warn("{}: Snapshot serialized to attribute segment, but failed to update snapshot location due to {}.",
-                                    this.traceObjectId, ex.toString());
+                            log.warn(String.format("%s: Snapshot serialized to attribute segment, but failed to update snapshot location.",
+                                    this.traceObjectId), ex);
                             return CompletableFuture.<Void>completedFuture(null);
                         } else {
                             return Futures.<Void>failedFuture(ex);
@@ -516,7 +516,7 @@ class SegmentAttributeIndex implements AttributeIndex, CacheManager.Client, Auto
                 // If we do get here, we'll simply have to process more data when we read and potentially have more
                 // data than needed in the attribute segment, both of which will be fixed with the next snapshot attempt.
                 ex = Exceptions.unwrap(ex);
-                log.warn("{}: Snapshot serialized to attribute segment, but failed to update snapshot location or truncate Attribute Segment.", this.traceObjectId, ex);
+                log.warn(String.format("%s: Snapshot serialized to attribute segment, but failed to update snapshot location or truncate Attribute Segment.", this.traceObjectId), ex);
                 return null;
             });
         }

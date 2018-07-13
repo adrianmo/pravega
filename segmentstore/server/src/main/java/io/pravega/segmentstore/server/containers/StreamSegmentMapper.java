@@ -186,7 +186,7 @@ public class StreamSegmentMapper extends SegmentStateMapper {
                     if (ex instanceof StreamSegmentNotExistsException || ex instanceof DataCorruptionException) {
                         // Segment exists, but the State File is missing or corrupt. We have the data needed to rebuild it,
                         // so ignore any exceptions coming this way.
-                        log.warn("{}: Missing or corrupt State File for existing Segment '{}'; recreating.", this.traceObjectId, segmentName, ex);
+                        log.warn(String.format("%s: Missing or corrupt State File for existing Segment '%s'; recreating.", this.traceObjectId, segmentName), ex);
                         return null;
                     }
 

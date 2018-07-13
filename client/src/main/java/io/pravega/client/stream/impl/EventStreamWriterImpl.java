@@ -349,7 +349,7 @@ public class EventStreamWriterImpl<Type> implements EventStreamWriter<Type> {
                 // Segment sealed exception observed during a flush. Re-run flush on all the
                 // available writers.
                 success = false;
-                log.warn("Flush on segment {} failed due to {}, it will be retried.", writer.getSegmentName(), e.getMessage());
+                log.warn(String.format("Flush on segment %s failed due to %s, it will be retried.", writer.getSegmentName(), e.getMessage()), e);
             }
         }
         return success;
@@ -371,7 +371,7 @@ public class EventStreamWriterImpl<Type> implements EventStreamWriter<Type> {
                     } catch (SegmentSealedException e) {
                         // Segment sealed exception observed during a close. Re-run close on all the available writers.
                         success = false;
-                        log.warn("Close failed due to {}, it will be retried.", e.getMessage());
+                        log.warn(String.format("Close failed due to %s, it will be retried.", e.getMessage()), e);
                     }
                 }
             }

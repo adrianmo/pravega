@@ -171,7 +171,7 @@ public class SegmentStatsRecorderImpl implements SegmentStatsRecorder {
                 }
             }
         } catch (Exception e) {
-            log.warn("Record statistic for {} for data: {} and events:{} threw exception", streamSegmentName, dataLength, numOfEvents, e);
+            log.warn(String.format("Record statistic for %s for data: %s and events:%s threw exception", streamSegmentName, dataLength, numOfEvents), e);
         }
     }
 

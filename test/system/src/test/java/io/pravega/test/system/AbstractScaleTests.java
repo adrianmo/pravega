@@ -56,7 +56,7 @@ abstract class AbstractScaleTests {
     void recordResult(final CompletableFuture<Void> scaleTestResult, final String testName) {
         Futures.getAndHandleExceptions(scaleTestResult.handle((r, e) -> {
             if (e != null) {
-                log.error("test {} failed with exception {}", testName, e);
+                log.error(String.format("test %s failed with exception", testName), e);
             } else {
                 log.debug("test {} succeed", testName);
             }

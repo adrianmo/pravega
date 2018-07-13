@@ -247,14 +247,14 @@ public class ControllerEventProcessors extends AbstractIdleService implements Fa
 
     private CompletableFuture<Void> createScope(final String scopeName) {
         return Futures.toVoid(Retry.indefinitelyWithExpBackoff(DELAY, MULTIPLIER, MAX_DELAY,
-                e -> log.warn("Error creating event processor scope " + scopeName, e))
+                e -> log.warn(String.format("Error creating event processor scope %s", scopeName), e))
                                    .runAsync(() -> controller.createScope(scopeName)
                         .thenAccept(x -> log.info("Created controller scope {}", scopeName)), executor));
     }
 
     private CompletableFuture<Void> createStream(final StreamConfiguration streamConfig) {
         return Futures.toVoid(Retry.indefinitelyWithExpBackoff(DELAY, MULTIPLIER, MAX_DELAY,
-                e -> log.warn("Error creating event processor stream " + streamConfig.getStreamName(), e))
+                e -> log.warn(String.format("Error creating event processor stream %s", streamConfig.getStreamName()), e))
                                    .runAsync(() -> controller.createStream(streamConfig)
                                 .thenAccept(x ->
                                         log.info("Created stream {}/{}", streamConfig.getScope(), streamConfig.getStreamName())),
@@ -285,7 +285,7 @@ public class ControllerEventProcessors extends AbstractIdleService implements Fa
                     try {
                         return new ImmutablePair<>(processes.get(), groupProcesses);
                     } catch (Exception e) {
-                        log.error(String.format("Error fetching current processes%s", group.toString()), e);
+                        log.error(String.format("Error fetching current processes %s", group.toString()), e);
                         throw new CompletionException(e);
                     }
                 }, executor), RETRYABLE_PREDICATE, Integer.MAX_VALUE, executor))

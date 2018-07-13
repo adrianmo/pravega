@@ -114,7 +114,7 @@ class StatsProviderImpl implements StatsProvider {
                     .convertDurationsTo(TimeUnit.MILLISECONDS)
                     .build(ganglia));
             } catch (IOException e) {
-                log.warn("ganglia create failure: {}", e);
+                log.warn("ganglia create failure", e);
             }
         }
         if (conf.isEnableConsoleReporter()) {

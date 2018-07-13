@@ -1211,7 +1211,7 @@ public class ControllerImplTest {
                         assertTrue(createStreamStatus.get());
                         createCount.release();
                     } catch (Exception e) {
-                        log.error("Exception when creating stream: {}", e);
+                        log.error("Exception when creating stream", e);
 
                         // Don't wait for other threads to complete.
                         success.set(false);
@@ -1243,7 +1243,7 @@ public class ControllerImplTest {
                                      streamSegments.get().getSegmentForKey(0.6));
                         createCount.release();
                     } catch (Exception e) {
-                        log.error("Exception when getting segments: {}", e);
+                        log.error("Exception when getting segments", e);
 
                         // Don't wait for other threads to complete.
                         success.set(false);

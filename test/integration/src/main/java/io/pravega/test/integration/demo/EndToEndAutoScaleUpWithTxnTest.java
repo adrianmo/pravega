@@ -163,7 +163,7 @@ public class EndToEndAutoScaleUpWithTxnTest {
                     }).get();
         } catch (Throwable e) {
             System.err.print("Test failed with exception: " + e.getMessage());
-            log.error("Test failed with exception: {}", e);
+            log.error("Test failed with exception", e);
             System.exit(-1);
         }
 
@@ -183,7 +183,7 @@ public class EndToEndAutoScaleUpWithTxnTest {
                     transaction.commit();
                 } catch (Throwable e) {
                     System.err.println("test exception writing events " + e.getMessage());
-                    log.error("test exception writing events {}", e);
+                    log.error("test exception writing events", e);
                 }
             }
         });

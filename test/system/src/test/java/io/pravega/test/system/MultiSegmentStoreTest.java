@@ -199,7 +199,7 @@ public class MultiSegmentStoreTest {
                 String event = reader.readNextEvent(60000).getEvent();
                 Assert.assertEquals(fixedEvent, event);
             } catch (ReinitializationRequiredException e) {
-                log.error("Unexpected request to reinitialize {}", e);
+                log.error("Unexpected request to reinitialize", e);
                 throw new IllegalStateException("Unexpected request to reinitialize");
             }
         }

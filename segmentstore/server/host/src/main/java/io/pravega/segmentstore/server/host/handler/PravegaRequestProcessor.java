@@ -402,7 +402,7 @@ public class PravegaRequestProcessor extends FailingRequestProcessor implements 
     private Void handleException(long requestId, String segment, String operation, Throwable u) {
         if (u == null) {
             IllegalStateException exception = new IllegalStateException("No exception to handle.");
-            log.error("Error (Segment = '{}', Operation = '{}')", segment, operation, exception);
+            log.error(String.format("Error (Segment = '%s', Operation = '%s')", segment, operation), exception);
             throw exception;
         }
 
@@ -429,13 +429,13 @@ public class PravegaRequestProcessor extends FailingRequestProcessor implements 
             connection.send(new WireCommands.AuthTokenCheckFailed(requestId));
             connection.close();
         } else if (u instanceof UnsupportedOperationException) {
-            log.warn("Unsupported Operation '{}'.", operation, u);
+            log.warn(String.format("Unsupported Operation '%s'.", operation), u);
             connection.send(new OperationUnsupported(requestId, operation));
         } else if (u instanceof BadOffsetException) {
             BadOffsetException badOffset = (BadOffsetException) u;
             connection.send(new SegmentIsTruncated(requestId, segment,  badOffset.getExpectedOffset()));
         } else {
-            log.error("Error (Segment = '{}', Operation = '{}')", segment, operation, u);
+            log.error(String.format("Error (Segment = '%s', Operation = '%s')", segment, operation), u);
             connection.close(); // Closing connection should reinitialize things, and hopefully fix the problem
             throw new IllegalStateException("Unknown exception.", u);
         }
@@ -574,7 +574,7 @@ public class PravegaRequestProcessor extends FailingRequestProcessor implements 
             }
         } catch (Exception ex) {
             // gobble up any errors from stat recording so we do not affect rest of the flow.
-            log.error("exception while computing stats while merging txn {}", sourceInfo.getName(), ex);
+            log.error(String.format("exception while computing stats while merging txn %s", sourceInfo.getName()), ex);
         }
     }
 }

@@ -335,7 +335,7 @@ public class StreamMetadataTasks extends TaskBase {
                     }
                 })
                 .exceptionally(ex -> {
-                    log.warn("Exception thrown in trying to update stream configuration {}", ex);
+                    log.warn("Exception thrown in trying to update stream configuration", ex);
                     return handleUpdateStreamError(ex);
                 });
     }
@@ -478,7 +478,7 @@ public class StreamMetadataTasks extends TaskBase {
                                 if (cause instanceof EpochTransitionOperationExceptions.PreConditionFailureException) {
                                     response.setStatus(ScaleResponse.ScaleStreamStatus.PRECONDITION_FAILED);
                                 } else {
-                                    log.warn("Scale for stream {}/{} failed with exception {}", scope, stream, cause);
+                                    log.warn(String.format("Scale for stream %s/%s failed", scope, stream), cause);
                                     response.setStatus(ScaleResponse.ScaleStreamStatus.FAILURE);
                                 }
                             } else {
@@ -538,7 +538,7 @@ public class StreamMetadataTasks extends TaskBase {
 
         getRequestWriter().writeEvent(event).whenComplete((r, e) -> {
             if (e != null) {
-                log.warn("exception while posting event {} {}", e.getClass().getName(), e.getMessage());
+                log.warn("exception while posting event", e);
                 if (e instanceof TaskExceptions.ProcessingDisabledException) {
                     result.completeExceptionally(e);
                 } else {
@@ -615,7 +615,7 @@ public class StreamMetadataTasks extends TaskBase {
                         if (cause instanceof StoreException.DataNotFoundException) {
                             return CreateStreamStatus.Status.SCOPE_NOT_FOUND;
                         } else {
-                            log.warn("Create stream failed due to ", ex);
+                            log.warn("Create stream failed due to exception", ex);
                             return CreateStreamStatus.Status.FAILURE;
                         }
                     } else {

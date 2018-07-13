@@ -64,7 +64,7 @@ abstract class AbstractReadWriteTest {
                 }
                 reinitializationRequired = false;
             } catch (ReinitializationRequiredException e) {
-                log.warn("Reinitialization of readers required: {}.", e);
+                log.warn("Reinitialization of readers required", e);
                 reinitializationRequired = true;
             }
         } while (reinitializationRequired || event.getEvent() != null || event.isCheckpoint());
