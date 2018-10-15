@@ -34,7 +34,7 @@ public class HDFSDockerService extends DockerBasedService {
     private final int instances = 1;
     private final double cpu = 0.5;
     private final double mem = 2048.0;
-    private final String hdfsimage = "dsrw/hdfs:2.7.3-1";
+    private final String hdfsimage = "flokkr/hadoop-hdfs-datanode:2.9.0";
 
     public HDFSDockerService(final String serviceName) {
         super(serviceName);
